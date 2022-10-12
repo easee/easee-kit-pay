@@ -43,11 +43,10 @@ class Pay {
   /// Alternative constructor to create a [Pay] object with a list of
   /// configurations in [String] format.
   Pay.withStrings(List<String> configStrings)
-      : _payPlatform = PayMethodChannel() {
-    _configurations = configStrings
-        .map((cs) => PaymentConfiguration.fromJsonString(cs))
-        .toList();
-  }
+      : _payPlatform = PayMethodChannel(),
+        _configurations = configStrings
+            .map((cs) => PaymentConfiguration.fromJsonString(cs))
+            .toList();
 
   /// Load the list of configurations from the assets.
   Future _loadConfigAssets(List<String> configurationAssets) async =>
