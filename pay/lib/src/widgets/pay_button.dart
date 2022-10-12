@@ -60,11 +60,20 @@ abstract class PayButton extends StatefulWidget {
     this.onError,
     this.childOnError,
     this.loadingIndicator,
-  ) : super(key: key) {
-    if (paymentConfigurationAsset != null) {
-      _payClient = Pay.withAssets([paymentConfigurationAsset]);
-    } else if (paymentConfigurationString != null) {
-      _payClient = Pay.withStrings([paymentConfigurationString]);
+  )   : _payClient = _payClientForConfigurations(
+            paymentConfigurationAsset, paymentConfigurationString),
+        super(key: key);
+
+  /// Creates a [PayClient] from a configuration loaded from an asset
+  /// (in [configAsset]) or a string (in [configString]).
+  ///
+  /// If none of the fields are set, an [Exception] is thrown.
+  static Pay _payClientForConfigurations(
+      String? configAsset, String? configString) {
+    if (configAsset != null) {
+      return Pay.withAssets([configAsset]);
+    } else if (configString != null) {
+      return Pay.withStrings([configString]);
     } else {
       throw Exception(
           "No configuration provided. Either a 'paymentConfigurationAsset' or a 'paymentConfigurationString' must be passed in as an argument.");

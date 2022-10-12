@@ -136,12 +136,12 @@ class PaymentHandler: NSObject {
       )
     }
     
-    // Configure the payment.
+    // Configure the payment
     paymentRequest.merchantIdentifier = paymentConfiguration["merchantIdentifier"] as! String
     paymentRequest.countryCode = paymentConfiguration["countryCode"] as! String
     paymentRequest.currencyCode = paymentConfiguration["currencyCode"] as! String
     
-    // Add merchant capabilities.
+    // Add merchant capabilities
     if let merchantCapabilities = paymentConfiguration["merchantCapabilities"] as? Array<String> {
       paymentRequest.merchantCapabilities = PKMerchantCapability(merchantCapabilities.compactMap { capabilityString in
         PKMerchantCapability.fromString(capabilityString)
