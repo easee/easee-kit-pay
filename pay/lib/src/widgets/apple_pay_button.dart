@@ -27,8 +27,9 @@ class ApplePayButton extends PayButton {
     Key? key,
     @Deprecated(
         'Prefer to use [paymentConfiguration]. Take a look at the readme to see examples')
-    String? paymentConfigurationAsset,
     PaymentConfiguration? paymentConfiguration,
+    String? paymentConfigurationAsset,
+    String? paymentConfigurationString,
     required void Function(Map<String, dynamic> result) onPaymentResult,
     required List<PaymentItem> paymentItems,
     ApplePayButtonStyle style = ApplePayButtonStyle.black,
@@ -45,8 +46,9 @@ class ApplePayButton extends PayButton {
         super(
           key,
           PayProvider.apple_pay,
-          paymentConfigurationAsset,
           paymentConfiguration,
+          paymentConfigurationAsset,
+          paymentConfigurationString,
           onPaymentResult,
           width,
           height,

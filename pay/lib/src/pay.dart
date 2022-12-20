@@ -42,6 +42,19 @@ class Pay {
     _assetInitializationFuture = _loadConfigAssets(configAssets);
   }
 
+  /// Alternative constructor to create a [Pay] object with a list of
+  /// configurations in [String] format.
+  Pay.withStrings(List<String> configStrings)
+      : _payPlatform = PayMethodChannel() {
+    // _configurations = configStrings
+    //     .map((cs) => PaymentConfiguration.fromJsonString(cs))
+    //     .toList();
+
+    _configurations = Map.fromEntries(configStrings
+        .map((cs) => PaymentConfiguration.fromJsonString(cs))
+        .map((c) => MapEntry(c.provider, c)));
+  }
+
   /// Load the list of configurations from the assets.
   Future _loadConfigAssets(List<String> configurationAssets) async =>
       _configurations = Map.fromEntries(await Future.wait(configurationAssets

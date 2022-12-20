@@ -24,9 +24,11 @@ class GooglePayButton extends PayButton {
 
   GooglePayButton({
     Key? key,
-    @Deprecated('Prefer to use [paymentConfiguration]. Take a look at the readme to see examples')
-        String? paymentConfigurationAsset,
+    @Deprecated(
+        'Prefer to use [paymentConfiguration]. Take a look at the readme to see examples')
     PaymentConfiguration? paymentConfiguration,
+    String? paymentConfigurationAsset,
+    String? paymentConfigurationString,
     required void Function(Map<String, dynamic> result) onPaymentResult,
     required List<PaymentItem> paymentItems,
     GooglePayButtonType type = GooglePayButtonType.pay,
@@ -42,8 +44,9 @@ class GooglePayButton extends PayButton {
         super(
           key,
           PayProvider.google_pay,
-          paymentConfigurationAsset,
           paymentConfiguration,
+          paymentConfigurationAsset,
+          paymentConfigurationString,
           onPaymentResult,
           width,
           height,
