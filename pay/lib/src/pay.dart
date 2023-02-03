@@ -55,9 +55,24 @@ class Pay {
           configurationAssets.map((ca) => PaymentConfiguration.fromAsset(ca)));
 
   /// Helper method to load the payment configuration for a given [provider].
-  PaymentConfiguration _findConfig([PayProvider? provider]) => provider == null
-      ? _configurations.first
-      : _configurations.firstWhere((c) => c.provider == provider);
+  PaymentConfiguration? _findConfig([PayProvider? provider])
+	{
+		if (provider == null)
+		{
+			if (_configurations.isNotEmpty)
+				return _configurations.first;
+			return null;
+		}
+		try
+		{
+			return _configurations.firstWhere((c) => c.provider == provider);
+		}
+		catch(_)
+		{
+
+		}
+		return null;
+	}
 
   /// Determines whether a user can pay with the selected [provider].
   ///
@@ -66,12 +81,17 @@ class Pay {
   /// running the logic.
   Future<bool> userCanPay([PayProvider? provider]) async {
     await _assetInitializationFuture;
-    final configuration = _findConfig(provider);
 
-    if (supportedProviders[defaultTargetPlatform]!
-        .contains(configuration.provider.toSimpleString())) {
+    final configuration = _findConfig(provider);
+    if (configuration == null) 
+      return Future.value(false);
+		
+    final sp = supportedProviders[defaultTargetPlatform];
+    if (sp == null) 
+      return Future.value(false);
+
+    if (sp.contains(configuration.provider.toSimpleString()))
       return _payPlatform.userCanPay(configuration);
-    }
 
     return Future.value(false);
   }
@@ -87,6 +107,7 @@ class Pay {
   }) async {
     await _assetInitializationFuture;
     final configuration = _findConfig(provider);
+		if (configuration == null) return Future.value({});
     return _payPlatform.showPaymentSelector(configuration, paymentItems);
   }
 }
