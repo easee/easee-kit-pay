@@ -46,10 +46,6 @@ class Pay {
   /// configurations in [String] format.
   Pay.withStrings(List<String> configStrings)
       : _payPlatform = PayMethodChannel() {
-    // _configurations = configStrings
-    //     .map((cs) => PaymentConfiguration.fromJsonString(cs))
-    //     .toList();
-
     _configurations = Map.fromEntries(configStrings
         .map((cs) => PaymentConfiguration.fromJsonString(cs))
         .map((c) => MapEntry(c.provider, c)));
